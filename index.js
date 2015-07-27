@@ -31,8 +31,8 @@ var init = function(_TYPE,_DIR){
 	var _ARGUMENTS = process.argv
 	// var _DIR = _ARGUMENTS[2]
 	var _THIS_DIR = process.cwd()
-	var _DEV = path.join(_THIS_DIR)
-	var _OUTPUT = path.join(_THIS_DIR,'../output/')
+	var _DEV = path.join(_THIS_DIR,'./dev')
+	var _OUTPUT = path.join(_THIS_DIR,'./output/')
 	var _ZT_OUTPUT = path.resolve(_THIS_DIR,_OUTPUT,_DIR + '/')
 	var _ZT_DIR = path.resolve(_THIS_DIR,_DEV,_DIR + '/')
 	// var _TYPE = _ARGUMENTS[3].replace('-','')
@@ -89,6 +89,7 @@ var init = function(_TYPE,_DIR){
 		var moduleDir = source + '/module'
 		var widget = source + '/widget'
 		var psd = source + '/psd'
+		var api = source + '/api'
 
 	  var fisConfig = ztDir + '/fis-conf.js'
 
@@ -110,6 +111,9 @@ var init = function(_TYPE,_DIR){
 					if(err)throw new Error(err)
 				})
 				fs.mkdir(psd,function(err){
+					if(err)throw new Error(err)
+				})
+				fs.mkdir(api,function(err){
 					if(err)throw new Error(err)
 				})
 			}),
