@@ -44,10 +44,12 @@ var init = function(_TYPE,_DIR){
 		method:'GET',
 		path: _THIS_WEB[0]
 	};
-	var _FIS_CONTENT = 'fis.set("namespace","'+_DIR+'")\nfis.set("user","your name")\nfis.set("count","'+_THIS_WEB[1]+'")\n'
-	    _FIS_CONTENT += 'fis.set("designer","designer name")\nfis.set("createTime","'+(new Date)+'")\n'
-	    _FIS_CONTENT += 'fis.set("outputDir","'+_OUTPUT.replace(/\\/g,'\\\\')+'")\nfis.set("output","'+_ZT_OUTPUT.replace(/\\/g,'\\\\')+'")\n'
-			_FIS_CONTENT += 'fis.pcSub()\n'
+	var _FIS_CONTENT = 'fis.set("namespace","'+_DIR+'")\n\nfis.set("user","your name")\nfis.set("count","'+_THIS_WEB[1]+'")\n\n'
+	    _FIS_CONTENT += 'fis.set("designer","designer name")\n\nfis.set("createTime","'+(new Date)+'")\n\n'
+	    _FIS_CONTENT += 'fis.set("outputDir","'+_OUTPUT.replace(/\\/g,'\\\\')+'")\n\nfis.set("output","'+_ZT_OUTPUT.replace(/\\/g,'\\\\')+'")\n\n'
+			// _FIS_CONTENT += 'fis.set("projectCharset",void 0)\n\n'
+			_FIS_CONTENT += 'fis.set("remoteServer","http://192.168.50.132:8999")\n\n'
+			_FIS_CONTENT += 'fis.pcSub()\n\n'
 	    // _FIS_CONTENT += fs.readFileSync('./fis-conf.js').toString()
 
 	var checkDev = new Promise(function(resolve, reject) {
@@ -79,23 +81,24 @@ var init = function(_TYPE,_DIR){
 	})
 	.then(function(dir){
 	  if(!dir)return;
-	  var ztDir = dir
-	  var imgDir = ztDir + '/img'
-	  var cssDir = ztDir + '/css'
-	  var libDir = ztDir + '/lib'
+	  var ztDir   = dir
+	  var imgDir  = ztDir + '/img'
+	  var cssDir  = ztDir + '/css'
+	  var libDir  = ztDir + '/lib'
 		var pageDir = ztDir + '/page'
-	  var source = ztDir + '/source'
+	  var source  = ztDir + '/source'
 
 		var moduleDir = source + '/module'
-		var widget = source + '/widget'
-		var psd = source + '/psd'
-		var api = source + '/api'
+		var widget    = source + '/widget'
+		var psd       = source + '/psd'
+		var api       = source + '/api'
 
 	  var fisConfig = ztDir + '/fis-conf.js'
 
-	  var index = pageDir + '/index.html'
-	  var cssFile = cssDir + '/index.css'
-	  var jsFile = libDir + '/index.js'
+	  var index     = pageDir + '/index.html'
+		var data      = pageDir + '/_data.js'
+	  var cssFile   = cssDir + '/index.css'
+	  var jsFile    = libDir + '/index.js'
 	  var i = 0
 	  return Promise.all([
 	    new Promise(function(resolve, reject) {
@@ -163,6 +166,7 @@ var init = function(_TYPE,_DIR){
 				})
 			}).then(function(data){
 				fs.createWriteStream(index).write(data,'utf-8')
+				fs.createWriteStream(data) .write('module.exports\s=\s{\n\t//your data..\n}')
 			}),
 	    new Promise(function(resolve,reject){
 	      var content = _FIS_CONTENT
