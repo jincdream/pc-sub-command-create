@@ -81,7 +81,7 @@ var init = function(_TYPE, _DIR) {
       _FIS_CONTENT += 'fis.set("remoteServer","http://192.168.50.132:8999")\n\n'
       _FIS_CONTENT += 'fis.set("site","' + _THIS_WEB.site + '")\n\nfis.set("city","gz")\n\n'
       _FIS_CONTENT += 'fis.set("www1Url",false)//自定义www1上传路径，例如：/test/abc/123/,默认为规范路径\n\n'
-      _FIS_CONTENT += 'fis.get("uploadCharset","gbk")//所上传的文件编码，默认gbk'
+      _FIS_CONTENT += 'fis.get("uploadCharset","gbk")//所上传的文件编码，默认gbk\n\n'
       _FIS_CONTENT += 'fis.pcSub()'
   // _FIS_CONTENT += fs.readFileSync('./fis-conf.js').toString()
 
