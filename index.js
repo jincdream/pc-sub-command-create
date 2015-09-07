@@ -9,7 +9,6 @@ var DAY   = +createTime.getDay()
     MONTH = MONTH < 10 ? '0' + MONTH : MONTH
     DAY   = DAY < 10 ? '0' + DAY : DAY
 var init = function(_TYPE, _DIR) {
-  // #!/usr/bin/env node
   var _ZT_WAP = ''
     // var _ZT_WAP = '_wap'
   var _ZT_HEAD   = 'zt_header_cb' + _ZT_WAP + '.html';
@@ -78,9 +77,11 @@ var init = function(_TYPE, _DIR) {
       _FIS_CONTENT += 'fis.set("user",{\n\tusername:"www1 name",\n\tpassword:"www1 password",\n\tdesigner:"designer name",\n\tFEer:"your name"\n})\n\n'
       _FIS_CONTENT += 'fis.set("createTime","' + YEAR + MONTH + DAY + '")\n\nfis.set("_createTime","' +(new Date) + '")\n\n'
       _FIS_CONTENT += 'fis.set("outputDir","' + _OUTPUT.replace(/\\/g, '\\\\') + '")\n\nfis.set("output","' + _ZT_OUTPUT.replace(/\\/g, '\\\\') + '")\n\n'
+      _FIS_CONTENT += 'fis.set("devDir","' + _DEV.replace(/\\/g, '\\\\') + '")\n\nfis.set("dev","' + _ZT_DIR.replace(/\\/g, '\\\\') + '")\n\n'
       _FIS_CONTENT += 'fis.set("remoteServer","http://192.168.50.132:8999")\n\n'
       _FIS_CONTENT += 'fis.set("site","' + _THIS_WEB.site + '")\n\nfis.set("city","gz")\n\n'
       _FIS_CONTENT += 'fis.set("www1Url",false)//自定义www1上传路径，例如：/test/abc/123/,默认为规范路径\n\n'
+      _FIS_CONTENT += 'fis.get("uploadCharset","gbk")//所上传的文件编码，默认gbk'
       _FIS_CONTENT += 'fis.pcSub()'
   // _FIS_CONTENT += fs.readFileSync('./fis-conf.js').toString()
 
@@ -113,25 +114,29 @@ var init = function(_TYPE, _DIR) {
   })
   .then(function(dir) {
     if (!dir) return;
-    var ztDir   = dir
-    var imgDir  = ztDir + '/img'
-    var cssDir  = ztDir + '/css'
-    var libDir  = ztDir + '/lib'
-    var pageDir = ztDir + '/page'
-    var source  = ztDir + '/source'
-    
+    var ztDir     = dir
+    var imgDir    = ztDir + '/img'
+    var cssDir    = ztDir + '/css'
+    var libDir    = ztDir + '/lib'
+    var pageDir   = ztDir + '/page'
+
+    var source    = ztDir + '/source'
     var moduleDir = source + '/module'
     var widget    = source + '/widget'
     var psd       = source + '/psd'
     var api       = source + '/api'
-    
+
     var fisConfig = ztDir + '/fis-conf.js'
+
+    var index     = pageDir + '/index.html'
+    var dataFike  = pageDir + '/_data.js'
+    var cssFile   = cssDir + '/index.css'
+    var jsFile    = libDir + '/index.js'
+
+    var layoutDir = pageDir + '/layout'
     
-    var index    = pageDir + '/index.html'
-    var dataFike = pageDir + '/_data.js'
-    var cssFile  = cssDir + '/index.css'
-    var jsFile   = libDir + '/index.js'
-    var i        = 0
+    var i         = 0
+
     return Promise.all([
         new Promise(function(resolve, reject) {
           fs.mkdir(source, function(err) {
@@ -197,8 +202,11 @@ var init = function(_TYPE, _DIR) {
             })
           })
         }).then(function(data) {
+          fs.mkdir(layoutDir,function(err){
+            err && console.log(err)
+          })
           fs.createWriteStream(index).write(data, 'utf-8')
-          fs.createWriteStream(dataFike).write('exports.data = {\n\t//your page data..\n}')
+          fs.createWriteStream(dataFike).write('module.exports.data = {\n\t//your page data..\n}')
         }),
         new Promise(function(resolve, reject) {
           var content = _FIS_CONTENT
