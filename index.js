@@ -277,6 +277,7 @@ exports.options = {
   '-h,--pchouse <subject name>': 'create pchouse subject file',
   '-a,--pcauto <subject name>': 'create pcauto subject file',
   '-l,--pclady <subject name>': 'create pclady subject file',
+  '-g,--pcgame <subject name>': 'create pcgame subject file'
 };
 exports.run = function(argv, cli, env) {
   if (argv.h || argv.help) {
