@@ -85,7 +85,7 @@ var init = function(_TYPE, _DIR , cli ,env) {
   var _ZT_WAP = ''
     // var _ZT_WAP = '_wap'
   var _ZT_SRC    = 'http://'+ geth(oo) + '/svn/other/doc/documents/pc-sub-zt-module-work/output/ztmodule/'
-  var _EDITER_DIR= 'http://'+ geth(oo) + '/svn/other/doc/documents/pc-sub-zt-module-work/output/edite/'
+  var _EDITER_DIR= 'http://'+ geth(oo) + '/svn/other/doc/documents/pc-sub-zt-module-work/output/edit/'
   var _ZT_CONFIG = {
     pconline: {
       source: _ZT_SRC + '/pconline.html',
@@ -174,7 +174,7 @@ var init = function(_TYPE, _DIR , cli ,env) {
   var _THIS_DIR  = process.cwd()
   var _DEV       = path.join(_THIS_DIR, './dev')
   var _OUTPUT    = path.join(_THIS_DIR, './output/')
-  var _EDITE     = path.join(_THIS_DIR, './edite/')
+  var _EDITE     = path.join(_THIS_DIR, './edit/')
   var _ZT_OUTPUT = path.resolve(_THIS_DIR, _OUTPUT, _DIR + '/')
   var _ZT_DIR    = path.resolve(_THIS_DIR, _DEV, _DIR + '/')
   var _ZT_EDITE  = path.resolve(_THIS_DIR, _EDITE, _DIR + '/')
@@ -193,7 +193,7 @@ var init = function(_TYPE, _DIR , cli ,env) {
       _FIS_CONTENT += 'fis.set("createTime","' + YEAR + MONTH + DAY + '")\n\nfis.set("_createTime","' +(new Date) + '")\n\n'
       _FIS_CONTENT += 'fis.set("outputDir","' + _OUTPUT.replace(/\\/g, '\\\\') + '")\n\nfis.set("output","' + _ZT_OUTPUT.replace(/\\/g, '\\\\') + '")\n\n'
       _FIS_CONTENT += 'fis.set("devDir","' + _DEV.replace(/\\/g, '\\\\') + '")\n\nfis.set("dev","' + _ZT_DIR.replace(/\\/g, '\\\\') + '")\n\n'
-      _FIS_CONTENT += 'fis.set("editeDir","' + _EDITE.replace(/\\/g, '\\\\') + '")\n\nfis.set("edite","' + _ZT_EDITE.replace(/\\/g, '\\\\') + '")\n\n'
+      _FIS_CONTENT += 'fis.set("editeDir","' + _EDITE.replace(/\\/g, '\\\\') + '")\n\nfis.set("edit","' + _ZT_EDITE.replace(/\\/g, '\\\\') + '")\n\n'
       _FIS_CONTENT += 'fis.set("remoteServer","http://")\n\n'
       _FIS_CONTENT += 'fis.set("site","' + _THIS_WEB.site + '")\n\nfis.set("city","gz")\n\n'
       _FIS_CONTENT += 'fis.set("www1Url",false)//自定义www1上传路径，例如：/test/abc/123/,默认为规范路径\n\n'
@@ -393,7 +393,7 @@ var init = function(_TYPE, _DIR , cli ,env) {
     var widget    = source + '/widget'
     var psd       = source + '/psd'
     var api       = source + '/api'
-    var edite     = source + '/edite'
+    var edit     = source + '/edit'
 
     var fisConfig = ztDir + '/fis-conf.js'
 
@@ -425,7 +425,7 @@ var init = function(_TYPE, _DIR , cli ,env) {
           fs.mkdir(api, function(err) {
             if (err) throw new Error(err)
           })
-          fs.mkdir(edite,function(err){
+          fs.mkdir(edit,function(err){
             if(err) throw new Error(err)
           })
         }),
