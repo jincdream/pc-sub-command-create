@@ -186,14 +186,17 @@ var init = function(_TYPE, _DIR , cli ,env) {
     method: 'GET',
     path: _THIS_WEB.source
   };
-  var _FIS_CONTENT  = 'fis.set("project.ignore",["node_modules/**", "output/**", "fis-conf.js" , ".svn/**", ".git/**" ,"source/**","**/.svn"])\n\n'
+  var _FIS_CONTENT  = 'var path = require("path")\nvar _dirName = path.resolve(__dirname)\n\n'
+      _FIS_CONTENT += 'var workDir = path.resolve(_dirName,"../../")\n\n'
+      _FIS_CONTENT += 'fis.set("project.ignore",["node_modules/**", "output/**", "fis-conf.js" , ".svn/**", ".git/**" ,"source/**","**/.svn"])\n\n'
       _FIS_CONTENT += 'fis.set("namespace","' + _DIR + '")\n\nfis.set("count","' + _THIS_WEB.count + '")\n\n'
-      _FIS_CONTENT += 'fis.set("user",{\n\tusername:"www1 name",\n\tpassword:"www1 password",\n\tdesigner:"designer name",\n\tFEer:"your name"\n})\n\n'
+      _FIS_CONTENT += 'fis.set("user",{\n\tusername:"www1_name",\n\tpassword:"www1_password",\n\tdesigner:"designer_name",\n\tFEer:"your_name"\n})\n\n'
       _FIS_CONTENT += 'fis.set("extendData",{designer:fis.get("user").designer,FEer:fis.get("user").FEer})\n\n'
       _FIS_CONTENT += 'fis.set("createTime","' + YEAR + MONTH + DAY + '")\n\nfis.set("_createTime","' +(new Date) + '")\n\n'
-      _FIS_CONTENT += 'fis.set("outputDir","' + _OUTPUT.replace(/\\/g, '\\\\') + '")\n\nfis.set("output","' + _ZT_OUTPUT.replace(/\\/g, '\\\\') + '")\n\n'
-      _FIS_CONTENT += 'fis.set("devDir","' + _DEV.replace(/\\/g, '\\\\') + '")\n\nfis.set("dev","' + _ZT_DIR.replace(/\\/g, '\\\\') + '")\n\n'
-      _FIS_CONTENT += 'fis.set("editeDir","' + _EDITE.replace(/\\/g, '\\\\') + '")\n\nfis.set("edit","' + _ZT_EDITE.replace(/\\/g, '\\\\') + '")\n\n'
+      _FIS_CONTENT += 'fis.set("workDir",workDir)\n\n'
+      _FIS_CONTENT += 'fis.set("outputDir",path.resolve(workDir,"./output"))\n\nfis.set("output",path.resolve(workDir,"./output","./'+_DIR+'"))\n\n'
+      _FIS_CONTENT += 'fis.set("devDir",path.resolve(workDir,"./dev"))\n\nfis.set("dev",path.resolve(workDir,"./dev","./'+_DIR+'"))\n\n'
+      _FIS_CONTENT += 'fis.set("editDir",path.resolve(workDir,"./edit"))\n\nfis.set("edit",path.resolve(workDir,"./edit","./'+_DIR+'"))\n\n'
       _FIS_CONTENT += 'fis.set("remoteServer","http://")\n\n'
       _FIS_CONTENT += 'fis.set("site","' + _THIS_WEB.site + '")\n\nfis.set("city","gz")\n\n'
       _FIS_CONTENT += 'fis.set("www1Url",false)//自定义www1上传路径，例如：/test/abc/123/,默认为规范路径\n\n'
