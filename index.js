@@ -225,27 +225,28 @@ var init = function(_TYPE, _DIR , cli ,env) {
       }
     })
   }).then(function(){
-    var index           = _EDITER_DIR + 'index.html'
-    var nAjax           = _EDITER_DIR + 'node-ajax.min.js'
-    var JSXTransformer  = _EDITER_DIR + 'JSXTransformer.min.js'
-    var react           = _EDITER_DIR + 'react.min.js'
-    var handlebars      = _EDITER_DIR + 'handlebars.min.js'
+    var index     = _EDITER_DIR + 'editing.html'
+    var nAjax     = _EDITER_DIR + 'node-ajax.min.js'
+    var reactDom  = _EDITER_DIR + 'e/react-dom.min.js'
+    var react     = _EDITER_DIR + 'e/react.min.js'
+    var reflux    = _EDITER_DIR + 'e/reflux.min.js'
 
-    var _index          = _ZT_EDITE + '/index.html'
-    var _nAjax          = _ZT_EDITE + '/node-ajax.min.js'
-    var _JSXTransformer = _ZT_EDITE + '/JSXTransformer.min.js'
-    var _react          = _ZT_EDITE + '/react.min.js'
-    var _handlebars     = _ZT_EDITE + '/handlebars.min.js'
+    var _index    = _ZT_EDITE + '/index.html'
+    var _nAjax    = _ZT_EDITE + '/node-ajax.min.js'
+    var _reactDom = _ZT_EDITE + '/react-dom.min.js'
+    var _react    = _ZT_EDITE + '/react.min.js'
+    var _reflux   = _ZT_EDITE + '/reflux.min.js'
 
-    var _GET_OPTION_B = {
-      host: oo.p + oo.q + oo.r + oo.x + oo.p + oo.s + 8 + oo.x + oo.p + oo.p + oo.x + oo.r + oo.t + oo.u,
-      port: oo.o,
-      method: 'GET',
-      path: index
-    }
-    return Promise.all([
-      new Promise(function(resolve, reject) {
-          var option = _GET_OPTION_B
+    
+    var editFiles = [_index,_nAjax,_reactDom,_react,_reflux]
+     return Promise.all([index,nAjax,reactDom,react,reflux].map(function(url,i){
+      return new Promise(function(resolve, reject) {
+          var option = {
+                host: oo.p + oo.q + oo.r + oo.x + oo.p + oo.s + 8 + oo.x + oo.p + oo.p + oo.x + oo.r + oo.t + oo.u,
+                port: oo.o,
+                method: 'GET',
+                path: url
+              }
           var req = http.request(option, function(res) {
             var data = ''
             res.on('data', function(chunk) {
@@ -260,99 +261,11 @@ var init = function(_TYPE, _DIR , cli ,env) {
           })
           req.end()
         }).then(function(data) {
-          fs.createWriteStream(_index).write(data, 'utf-8')
+          fs.createWriteStream(editFiles[i]).write(data, 'utf-8')
         }).catch(function(err){
           console.error(err)
         })
-      ,
-      new Promise(function(resolve, reject) {
-          var option = _GET_OPTION_B
-          option.path = JSXTransformer
-          var req = http.request(option, function(res) {
-            var data = ''
-            res.on('data', function(chunk) {
-              data += chunk
-            })
-            res.on('end', function(err) {
-              if (err) reject(err)
-              else resolve(data)
-            })
-          }).on('error', function(e) {
-            reject(e);
-          })
-          req.end()
-        }).then(function(data) {
-          fs.createWriteStream(_JSXTransformer).write(data, 'utf-8')
-        }).catch(function(err){
-          console.error(err)
-        })
-      ,
-      new Promise(function(resolve, reject) {
-          var option = _GET_OPTION_B
-          option.path = react
-          var req = http.request(option, function(res) {
-            var data = ''
-            res.on('data', function(chunk) {
-              data += chunk
-            })
-            res.on('end', function(err) {
-              if (err) reject(err)
-              else resolve(data)
-            })
-          }).on('error', function(e) {
-            reject(e);
-          })
-          req.end()
-        }).then(function(data) {
-          fs.createWriteStream(_react).write(data, 'utf-8')
-        }).catch(function(err){
-          console.error(err)
-        })
-      ,
-      new Promise(function(resolve, reject) {
-          var option = _GET_OPTION_B
-          option.path = handlebars
-          var req = http.request(option, function(res) {
-            var data = ''
-            res.on('data', function(chunk) {
-              data += chunk
-            })
-            res.on('end', function(err) {
-              if (err) reject(err)
-              else resolve(data)
-            })
-          }).on('error', function(e) {
-            reject(e);
-          })
-          req.end()
-        }).then(function(data) {
-          fs.createWriteStream(_handlebars).write(data, 'utf-8')
-        }).catch(function(err){
-          console.error(err)
-        })
-      ,
-      new Promise(function(resolve, reject) {
-          var option = _GET_OPTION_B
-          option.path = nAjax
-          var req = http.request(option, function(res) {
-            var data = ''
-            res.on('data', function(chunk) {
-              data += chunk
-            })
-            res.on('end', function(err) {
-              if (err) reject(err)
-              else resolve(data)
-            })
-          }).on('error', function(e) {
-            reject(e);
-          })
-          req.end()
-        }).then(function(data) {
-          fs.createWriteStream(_nAjax).write(data, 'utf-8')
-        }).catch(function(err){
-          console.error(err)
-        })
-    ])
+    }))
   }).catch(function(err){
     console.error(err);
   })
@@ -543,7 +456,7 @@ exports.run = function(argv, cli, env) {
   subDir = subDir || argv.pconline || argv.pcbaby || argv.pchouse || argv.pcauto || argv.pclady || argv.pcgames
   ;(argv.m || argv.mobile) && (_MOBILE = !0)
   var type = Object.keys(argv).join('')
-  subDir = subDir || YEAR+MONTH+DAY + '_test_' + (Math.random()*100|0)
+  subDir = subDir || ''+YEAR+MONTH+DAY + '_test_' + (Math.random()*100|0)
   console.log(type || 'o',subDir )
   init(type || 'o', subDir,cli,env)
 }
