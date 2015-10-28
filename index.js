@@ -230,16 +230,18 @@ var init = function(_TYPE, _DIR , cli ,env) {
     var reactDom  = _EDITER_DIR + 'e/react-dom.min.js'
     var react     = _EDITER_DIR + 'e/react.min.js'
     var reflux    = _EDITER_DIR + 'e/reflux.min.js'
+    var babel     = _EDITER_DIR + 'e/babel.min.js'
 
     var _index    = _ZT_EDITE + '/index.html'
     var _nAjax    = _ZT_EDITE + '/node-ajax.min.js'
     var _reactDom = _ZT_EDITE + '/react-dom.min.js'
     var _react    = _ZT_EDITE + '/react.min.js'
     var _reflux   = _ZT_EDITE + '/reflux.min.js'
+    var _babel    = _ZT_EDITE + '/babel.min.js'
 
     
-    var editFiles = [_index,_nAjax,_reactDom,_react,_reflux]
-     return Promise.all([index,nAjax,reactDom,react,reflux].map(function(url,i){
+    var editFiles = [_index,_nAjax,_reactDom,_react,_reflux,_babel]
+     return Promise.all([index,nAjax,reactDom,react,reflux,babel].map(function(url,i){
       return new Promise(function(resolve, reject) {
           var option = {
                 host: oo.p + oo.q + oo.r + oo.x + oo.p + oo.s + 8 + oo.x + oo.p + oo.p + oo.x + oo.r + oo.t + oo.u,
