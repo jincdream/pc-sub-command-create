@@ -449,7 +449,7 @@ exports.options = {
   '-mg,--mobile pcgame <subject name>': 'create pcgame mobile subject file'
 };
 exports.run = function(argv, cli, env) {
-  if (argv.h || argv.help) {
+  if ((argv.h === true) || argv.help) {
     return cli.help(exports.name, exports.options);
   }
   var command = argv._
